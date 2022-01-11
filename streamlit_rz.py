@@ -33,13 +33,13 @@ Please take these visualizations with a grain of salt. Most importantly, keep in
 
 """)
 
-with open('top_headings.json', 'r', encoding='utf8') as f:
+with open('data/top_headings.json', 'r', encoding='utf8') as f:
     contents = f.read()
     top_headings = json.loads(contents)
 
 @st.cache()
 def load_headings_df():
-    return pd.read_csv('headings_df.tsv', sep='\t', encoding='utf8')
+    return pd.read_csv('data/headings_df.tsv', sep='\t', encoding='utf8')
 
 headings_df = load_headings_df()
 
@@ -53,6 +53,8 @@ if len(heading_options) > 0:
 
     headings_plot_df = headings_df[['year', 'heading2', 'weight']][headings_df.heading2.isin(heading_options)].copy()
     pt = headings_plot_df.pivot_table(index='year', columns='heading2')
+
+    sns.set_theme(style='darkgrid')
     
     fig = plt.figure(figsize=(12,7))
     ax = fig.add_subplot()   
@@ -66,6 +68,8 @@ if len(heading_options) > 0:
     st.pyplot(fig)
 
 else:
+
+    sns.set_theme(style='darkgrid')
 
     fig = plt.figure(figsize=(12,7))
     ax = fig.add_subplot()   
@@ -81,7 +85,7 @@ st.subheader('Locations in article headings')
 
 @st.cache()
 def import_loc_headings_data():
-    with open('places_by_year.json', 'r', encoding='utf8') as f:
+    with open('data/places_by_year.json', 'r', encoding='utf8') as f:
         contents = f.read()
         places_by_year = json.loads(contents)
 
@@ -97,7 +101,6 @@ Again, this visualisation does not represent all of the geographical data presen
 """)
 
 map_timerange = st.slider('Select a timerange', min_value=1802, max_value=1888, value=(1802,1888))
-
 
 def generate_map_from_timerange(timerange, places_by_year):
 
