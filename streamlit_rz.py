@@ -45,6 +45,7 @@ headings_df = load_headings_df()
 
 ticksrange = np.arange(1802,1889)
 xlabels = [num if num%5==0 else '' for num in np.arange(1802,1889)]
+sns.set_theme(style='darkgrid')
 
 heading_options = st.multiselect(label='Select the headings you are interested in:', options=top_headings)
 print(heading_options, type(heading_options))
@@ -54,7 +55,7 @@ if len(heading_options) > 0:
     headings_plot_df = headings_df[['year', 'heading2', 'weight']][headings_df.heading2.isin(heading_options)].copy()
     pt = headings_plot_df.pivot_table(index='year', columns='heading2')
 
-    sns.set_theme(style='darkgrid')
+    #sns.set_theme(style='darkgrid')
     
     fig = plt.figure(figsize=(12,7))
     ax = fig.add_subplot()   
@@ -69,7 +70,7 @@ if len(heading_options) > 0:
 
 else:
 
-    sns.set_theme(style='darkgrid')
+    #sns.set_theme(style='darkgrid')
 
     fig = plt.figure(figsize=(12,7))
     ax = fig.add_subplot()   
